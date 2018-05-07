@@ -143,7 +143,7 @@ var AppComponent = /** @class */ (function () {
                 }
                 //load Images
                 for (i = 0; i < batches; i++) {
-                    images[i].src = "./assets/cifar10_batch_" + i + ".png";
+                    images[i].src = "./DIY_Project/assets/cifar10_batch_" + i + ".png";
                 }
                 that.data_canvas.getContext('2d').clearRect(0, 0, 1024, 1000);
                 wait = setInterval(function () {
@@ -221,7 +221,7 @@ var AppComponent = /** @class */ (function () {
     };
     AppComponent.prototype.test = function () {
         var img = new Image(1024, 1000);
-        img.src = "./assets/cifar10_batch_" + 0 + ".png";
+        img.src = "./DIY_Project/assets/cifar10_batch_" + 0 + ".png";
         var that = this, ref, test_data;
         img.onload = function () {
             return __awaiter(this, void 0, void 0, function () {
