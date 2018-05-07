@@ -143,7 +143,7 @@ var AppComponent = /** @class */ (function () {
                 }
                 //load Images
                 for (i = 0; i < batches; i++) {
-                    images[i].src = "./DIY_Project/assets/cifar10_batch_" + i + ".png";
+                    images[i].src = "./DIY_Project/cifar10_batch_" + i + ".png";
                 }
                 that.data_canvas.getContext('2d').clearRect(0, 0, 1024, 1000);
                 wait = setInterval(function () {
