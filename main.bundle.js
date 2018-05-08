@@ -147,7 +147,7 @@ var AppComponent = /** @class */ (function () {
                 that.data_canvas.getContext('2d').clearRect(0, 0, 1024, 1000);
                 wait = setInterval(function () {
                     return __awaiter(this, void 0, void 0, function () {
-                        var maxEpochs, i, batchData, batchLabels, offset, j, k, labelTensor, canvasData, imageData, j, loc, k, currentImage, z, t, e, history_1, loss, accuracy;
+                        var maxEpochs, i, batchData, batchLabels, offset, j, k, labelTensor, canvasData, imageData, j, loc, k, currentImage, z, t, e, temp, loc, k, history_1, loss, accuracy;
                         return __generator(this, function (_a) {
                             switch (_a.label) {
                                 case 0:
@@ -194,6 +194,15 @@ var AppComponent = /** @class */ (function () {
                                     _a.label = 2;
                                 case 2:
                                     if (!(e < maxEpochs)) return [3 /*break*/, 5];
+                                    temp = that.inputCanvas.nativeElement.getContext('2d').createImageData(32, 32);
+                                    loc = ((e) * 4096);
+                                    for (k = 0; k < imageData.data.length; k += 4) {
+                                        imageData.data[k] = canvasData.data[loc + k]; //red
+                                        imageData.data[k + 1] = canvasData.data[loc + k + 1]; //blue
+                                        imageData.data[k + 2] = canvasData.data[loc + k + 2]; //green
+                                        imageData.data[k + 3] = canvasData.data[loc + k + 3]; //alpha
+                                    }
+                                    that.inputCanvas.nativeElement.getContext('2d').putImageData();
                                     return [4 /*yield*/, that.model.fit(t, labelTensor, { batchSize: batchSize, epochs: 1 })];
                                 case 3:
                                     history_1 = _a.sent();
