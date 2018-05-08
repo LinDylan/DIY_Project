@@ -27,7 +27,7 @@ module.exports = "canvas {\r\n    width: 50%;\r\n    height: 50%;\r\n    top: 30
 /***/ "./src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<mat-toolbar color=\"primary\">\n  <mat-toolbar-row>\n    <span>Convolutional Neural Network</span>\n  </mat-toolbar-row>\n</mat-toolbar>\n<div id=\"content\" style=\"margin: auto; padding: 25px;\">\n  <div id=\"networkList\">\n    <mat-toolbar color=\"primary\">\n      <mat-toolbar-row>\n        <span>Network</span>\n        <button mat-icon-button on-click=\"addConvLayer()\">\n          <mat-icon aria-label=\"Add a Layer\">add</mat-icon>\n        </button>\n      </mat-toolbar-row>\n    </mat-toolbar>\n    <mat-selection-list>\n      <mat-list-option *ngFor=\"let layer of layers\">\n        {{layer.constructor.name}}\n      </mat-list-option>\n    </mat-selection-list>\n  </div>\n  <div id=\"inputView\">\n    <mat-toolbar color=\"primary\"><mat-toolbar-row><span>input</span></mat-toolbar-row></mat-toolbar>\n    <canvas #inputCanvas width=\"32\" height=\"32\"></canvas>\n  </div>\n  <div id=\"outputView\">\n      <mat-toolbar color=\"primary\"><mat-toolbar-row><span>Output</span></mat-toolbar-row></mat-toolbar>\n      <div #outputText style=\"margin: auto; padding: 25px;\"> \n        None\n      </div>\n  </div>\n  <div id=\"controlPad\">\n    <mat-toolbar color=\"primary\"><mat-toolbar-row><span>Controls</span></mat-toolbar-row></mat-toolbar>\n    <div id=\"controlPad_content\">\n      <button mat-raised-button color=\"primary\" on-click=\"train()\">Train</button>\n      <button mat-raised-button color=\"primary\" on-click=\"test()\">Test</button>\n    </div>\n  </div>\n</div>"
+module.exports = "<mat-toolbar color=\"primary\">\n  <mat-toolbar-row>\n    <span>Image Classification</span>\n  </mat-toolbar-row>\n</mat-toolbar>\n<div id=\"content\" style=\"margin: auto; padding: 25px;\">\n  <div id=\"networkList\">\n    <mat-toolbar color=\"primary\">\n      <mat-toolbar-row>\n        <span>Network</span>\n        <button mat-icon-button on-click=\"addConvLayer()\">\n          <mat-icon aria-label=\"Add a Layer\">add</mat-icon>\n        </button>\n      </mat-toolbar-row>\n    </mat-toolbar>\n    <mat-selection-list>\n      <mat-list-option *ngFor=\"let layer of layers\">\n        {{layer.constructor.name}}\n      </mat-list-option>\n    </mat-selection-list>\n  </div>\n  <div id=\"inputView\">\n    <mat-toolbar color=\"primary\"><mat-toolbar-row><span>input</span></mat-toolbar-row></mat-toolbar>\n    <canvas #inputCanvas width=\"32\" height=\"32\"></canvas>\n  </div>\n  <div id=\"outputView\">\n      <mat-toolbar color=\"primary\"><mat-toolbar-row><span>Output</span></mat-toolbar-row></mat-toolbar>\n      <div #outputText style=\"margin: auto; padding: 25px;\"> \n        None\n      </div>\n  </div>\n  <div id=\"controlPad\">\n    <mat-toolbar color=\"primary\"><mat-toolbar-row><span>Controls</span></mat-toolbar-row></mat-toolbar>\n    <div id=\"controlPad_content\">\n      <button mat-raised-button color=\"primary\" on-click=\"train()\">Train</button>\n      <button mat-raised-button color=\"primary\" on-click=\"test()\">Test</button>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -197,12 +197,12 @@ var AppComponent = /** @class */ (function () {
                                     temp = that.inputCanvas.nativeElement.getContext('2d').createImageData(32, 32);
                                     loc = ((e) * 4096);
                                     for (k = 0; k < imageData.data.length; k += 4) {
-                                        imageData.data[k] = canvasData.data[loc + k]; //red
-                                        imageData.data[k + 1] = canvasData.data[loc + k + 1]; //blue
-                                        imageData.data[k + 2] = canvasData.data[loc + k + 2]; //green
-                                        imageData.data[k + 3] = canvasData.data[loc + k + 3]; //alpha
+                                        temp.data[k] = canvasData.data[loc + k]; //red
+                                        temp.data[k + 1] = canvasData.data[loc + k + 1]; //blue
+                                        temp.data[k + 2] = canvasData.data[loc + k + 2]; //green
+                                        temp.data[k + 3] = canvasData.data[loc + k + 3]; //alpha
                                     }
-                                    that.inputCanvas.nativeElement.getContext('2d').putImageData();
+                                    that.inputCanvas.nativeElement.getContext('2d').putImageData(temp, 0, 0);
                                     return [4 /*yield*/, that.model.fit(t, labelTensor, { batchSize: batchSize, epochs: 1 })];
                                 case 3:
                                     history_1 = _a.sent();
