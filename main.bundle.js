@@ -98,7 +98,6 @@ var AppComponent = /** @class */ (function () {
         this.data_canvas.width = 1024;
         this.data_canvas.height = 1000;
         this.createModel();
-        this.addConvLayer();
         this.layers = this.model.layers;
         //this.test();
     };
@@ -155,7 +154,7 @@ var AppComponent = /** @class */ (function () {
                                     if (!(loaded === batches)) return [3 /*break*/, 7];
                                     console.log("done loading");
                                     clearInterval(wait);
-                                    maxEpochs = 1;
+                                    maxEpochs = 100;
                                     e = 0;
                                     _a.label = 1;
                                 case 1:
@@ -195,7 +194,7 @@ var AppComponent = /** @class */ (function () {
                                     }
                                     t = __WEBPACK_IMPORTED_MODULE_1__tensorflow_tfjs__["tensor"](batchData);
                                     t = t.as4D(batchSize, 32, 32, 3); //Equivalent to 1000 copies of images (32 x 32) with 3 color channels 
-                                    return [4 /*yield*/, that.model.fit(t, labelTensor, { batchSize: batchSize, epochs: 100 })];
+                                    return [4 /*yield*/, that.model.fit(t, labelTensor, { batchSize: batchSize, epochs: 1 })];
                                 case 3:
                                     history_1 = _a.sent();
                                     loss = history_1.history.loss[0];
