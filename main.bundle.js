@@ -151,7 +151,7 @@ var AppComponent = /** @class */ (function () {
                         return __generator(this, function (_a) {
                             switch (_a.label) {
                                 case 0:
-                                    if (!(loaded === batches)) return [3 /*break*/, 6];
+                                    if (!(loaded === batches)) return [3 /*break*/, 7];
                                     console.log("done loading");
                                     clearInterval(wait);
                                     maxEpochs = 100;
@@ -217,7 +217,8 @@ var AppComponent = /** @class */ (function () {
                                     return [3 /*break*/, 1];
                                 case 6:
                                     alert('done training');
-                                    return [2 /*return*/];
+                                    _a.label = 7;
+                                case 7: return [2 /*return*/];
                             }
                         });
                     });
