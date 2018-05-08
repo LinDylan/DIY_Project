@@ -154,7 +154,7 @@ var AppComponent = /** @class */ (function () {
                                     if (!(loaded === batches)) return [3 /*break*/, 7];
                                     console.log("done loading");
                                     clearInterval(wait);
-                                    maxEpochs = 100;
+                                    maxEpochs = 1000;
                                     i = 0;
                                     _a.label = 1;
                                 case 1:
@@ -203,6 +203,7 @@ var AppComponent = /** @class */ (function () {
                                         temp.data[k + 3] = canvasData.data[loc + k + 3]; //alpha
                                     }
                                     that.inputCanvas.nativeElement.getContext('2d').putImageData(temp, 0, 0);
+                                    console.log(temp);
                                     return [4 /*yield*/, that.model.fit(t, labelTensor, { batchSize: batchSize, epochs: 1 })];
                                 case 3:
                                     history_1 = _a.sent();
