@@ -127,7 +127,7 @@ var AppComponent = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             var that, batches, trainingBatches, batchSize, testFrequency, images, testImage, loaded, i, i, wait;
             return __generator(this, function (_a) {
-                that = this, batches = 50, trainingBatches = 1, batchSize = 1000, testFrequency = 1;
+                that = this, batches = 1, trainingBatches = 1, batchSize = 1000, testFrequency = 1;
                 images = new Array();
                 testImage = new Image(1024, 1000);
                 loaded = 0;
