@@ -20,14 +20,14 @@ webpackEmptyAsyncContext.id = "./src/$$_lazy_route_resource lazy recursive";
 /***/ "./src/app/app.component.css":
 /***/ (function(module, exports) {
 
-module.exports = "canvas {\r\n    width: 50%;\r\n    height: 50%;\r\n    top: 30%;\r\n    left: 25%;\r\n    position: absolute;\r\n}\r\n#networkList {\r\n    position: absolute;\r\n    z-index: 2;\r\n    max-width: 25%;\r\n    background-color: #F5F5F5;\r\n}\r\n#inputView {\r\n    position: absolute;\r\n    z-index: 2;\r\n    top: 100px;\r\n    left: 20%;\r\n    min-width: 448px;\r\n    min-height: 448px; \r\n    max-width: 448px;\r\n    max-height: 448px;\r\n    background-color: #F5F5F5;\r\n}\r\n#graphView {\r\n    position: absolute;\r\n    z-index: 2;\r\n    top: 100px;\r\n    left: 60%;\r\n    min-width: 448px;\r\n    min-height: 448px;\r\n    background-color: #F5F5F5;\r\n}\r\n#controlPad {\r\n    position: absolute;\r\n    top: 75%;\r\n    z-index: 2;\r\n    min-width: 95%;\r\n    max-width: 95%;\r\n    min-height: 20%;\r\n    max-height: 20%;\r\n    background-color: #F5F5F5;\r\n}\r\n#controlPad_content {\r\n    margin: auto;\r\n    padding: 15px;\r\n}"
+module.exports = "canvas {\r\n    width: 50%;\r\n    height: 50%;\r\n    top: 30%;\r\n    left: 25%;\r\n    position: absolute;\r\n}\r\n#networkList {\r\n    position: absolute;\r\n    z-index: 2;\r\n    max-width: 25%;\r\n    background-color: #F5F5F5;\r\n}\r\n#inputView {\r\n    position: absolute;\r\n    z-index: 2;\r\n    top: 100px;\r\n    left: 20%;\r\n    min-width: 448px;\r\n    min-height: 448px; \r\n    max-width: 448px;\r\n    max-height: 448px;\r\n    background-color: #F5F5F5;\r\n}\r\n#outputView {\r\n    position: absolute;\r\n    z-index: 2;\r\n    top: 100px;\r\n    left: 60%;\r\n    min-width: 300px;\r\n    min-height: 150px; \r\n    max-width: 300px;\r\n    max-height: 150px;\r\n    background-color: #F5F5F5;\r\n    font-size: 24px;\r\n    font-family: 'Roboto', 'Noto', sans-serif;\r\n    -webkit-font-smoothing: antialiased;\r\n}\r\n#controlPad {\r\n    position: absolute;\r\n    top: 75%;\r\n    z-index: 2;\r\n    min-width: 95%;\r\n    max-width: 95%;\r\n    min-height: 20%;\r\n    max-height: 20%;\r\n    background-color: #F5F5F5;\r\n}\r\n#controlPad_content {\r\n    margin: auto;\r\n    padding: 15px;\r\n}"
 
 /***/ }),
 
 /***/ "./src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<mat-toolbar color=\"primary\">\n  <mat-toolbar-row>\n    <span>Convolutional Neural Network</span>\n  </mat-toolbar-row>\n</mat-toolbar>\n<div id=\"content\" style=\"margin: auto; padding: 25px;\">\n  <div id=\"networkList\">\n    <mat-toolbar color=\"primary\">\n      <mat-toolbar-row>\n        <span>Network</span>\n        <button mat-icon-button on-click=\"addConvLayer()\">\n          <mat-icon aria-label=\"Add a Layer\">add</mat-icon>\n        </button>\n      </mat-toolbar-row>\n    </mat-toolbar>\n    <mat-selection-list>\n      <mat-list-option *ngFor=\"let layer of layers\">\n        {{layer.constructor.name}}\n      </mat-list-option>\n    </mat-selection-list>\n  </div>\n  <div id=\"inputView\">\n    <mat-toolbar color=\"primary\"><mat-toolbar-row><span>input</span></mat-toolbar-row></mat-toolbar>\n    <canvas #inputCanvas width=\"32\" height=\"32\"></canvas>\n  </div>\n  <!--<div id=\"graphView\">\n      <mat-toolbar color=\"primary\"><mat-toolbar-row><span>Graph</span></mat-toolbar-row></mat-toolbar>\n  </div>-->\n  <div id=\"controlPad\">\n    <mat-toolbar color=\"primary\"><mat-toolbar-row><span>Controls</span></mat-toolbar-row></mat-toolbar>\n    <div id=\"controlPad_content\">\n      <button mat-raised-button color=\"primary\" on-click=\"train()\">Train</button>\n      <button mat-raised-button color=\"primary\" on-click=\"test()\">Test</button>\n    </div>\n  </div>\n</div>"
+module.exports = "<mat-toolbar color=\"primary\">\n  <mat-toolbar-row>\n    <span>Convolutional Neural Network</span>\n  </mat-toolbar-row>\n</mat-toolbar>\n<div id=\"content\" style=\"margin: auto; padding: 25px;\">\n  <div id=\"networkList\">\n    <mat-toolbar color=\"primary\">\n      <mat-toolbar-row>\n        <span>Network</span>\n        <button mat-icon-button on-click=\"addConvLayer()\">\n          <mat-icon aria-label=\"Add a Layer\">add</mat-icon>\n        </button>\n      </mat-toolbar-row>\n    </mat-toolbar>\n    <mat-selection-list>\n      <mat-list-option *ngFor=\"let layer of layers\">\n        {{layer.constructor.name}}\n      </mat-list-option>\n    </mat-selection-list>\n  </div>\n  <div id=\"inputView\">\n    <mat-toolbar color=\"primary\"><mat-toolbar-row><span>input</span></mat-toolbar-row></mat-toolbar>\n    <canvas #inputCanvas width=\"32\" height=\"32\"></canvas>\n  </div>\n  <div id=\"outputView\">\n      <mat-toolbar color=\"primary\"><mat-toolbar-row><span>Output</span></mat-toolbar-row></mat-toolbar>\n      <div #outputText style=\"margin: auto; padding: 25px;\"> \n        None\n      </div>\n  </div>\n  <div id=\"controlPad\">\n    <mat-toolbar color=\"primary\"><mat-toolbar-row><span>Controls</span></mat-toolbar-row></mat-toolbar>\n    <div id=\"controlPad_content\">\n      <button mat-raised-button color=\"primary\" on-click=\"train()\">Train</button>\n      <button mat-raised-button color=\"primary\" on-click=\"test()\">Test</button>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -127,7 +127,7 @@ var AppComponent = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             var that, batches, trainingBatches, batchSize, testFrequency, images, testImage, loaded, i, i, wait;
             return __generator(this, function (_a) {
-                that = this, batches = 1, trainingBatches = 1, batchSize = 1000, testFrequency = 1;
+                that = this, batches = 50, trainingBatches = 1, batchSize = 1000, testFrequency = 1;
                 images = new Array();
                 testImage = new Image(1024, 1000);
                 loaded = 0;
@@ -147,22 +147,18 @@ var AppComponent = /** @class */ (function () {
                 that.data_canvas.getContext('2d').clearRect(0, 0, 1024, 1000);
                 wait = setInterval(function () {
                     return __awaiter(this, void 0, void 0, function () {
-                        var maxEpochs, e, i, batchData, batchLabels, offset, j, k, labelTensor, canvasData, imageData, j, loc, k, currentImage, z, t, history_1, loss, accuracy;
+                        var maxEpochs, i, batchData, batchLabels, offset, j, k, labelTensor, canvasData, imageData, j, loc, k, currentImage, z, t, e, history_1, loss, accuracy;
                         return __generator(this, function (_a) {
                             switch (_a.label) {
                                 case 0:
-                                    if (!(loaded === batches)) return [3 /*break*/, 7];
+                                    if (!(loaded === batches)) return [3 /*break*/, 6];
                                     console.log("done loading");
                                     clearInterval(wait);
                                     maxEpochs = 100;
-                                    e = 0;
+                                    i = 0;
                                     _a.label = 1;
                                 case 1:
-                                    if (!(e < maxEpochs)) return [3 /*break*/, 6];
-                                    i = 0;
-                                    _a.label = 2;
-                                case 2:
-                                    if (!(i < trainingBatches)) return [3 /*break*/, 5];
+                                    if (!(i < trainingBatches)) return [3 /*break*/, 6];
                                     batchData = new Array();
                                     batchLabels = new Array(), offset = (i * 1000);
                                     for (j = offset; j < (offset + 1000); j++) {
@@ -194,6 +190,10 @@ var AppComponent = /** @class */ (function () {
                                     }
                                     t = __WEBPACK_IMPORTED_MODULE_1__tensorflow_tfjs__["tensor"](batchData);
                                     t = t.as4D(batchSize, 32, 32, 3); //Equivalent to 1000 copies of images (32 x 32) with 3 color channels 
+                                    e = 0;
+                                    _a.label = 2;
+                                case 2:
+                                    if (!(e < maxEpochs)) return [3 /*break*/, 5];
                                     return [4 /*yield*/, that.model.fit(t, labelTensor, { batchSize: batchSize, epochs: 1 })];
                                 case 3:
                                     history_1 = _a.sent();
@@ -201,15 +201,14 @@ var AppComponent = /** @class */ (function () {
                                     accuracy = history_1.history.acc[0];
                                     _a.label = 4;
                                 case 4:
-                                    i++;
+                                    e++;
                                     return [3 /*break*/, 2];
                                 case 5:
-                                    e++;
+                                    i++;
                                     return [3 /*break*/, 1];
                                 case 6:
                                     alert('done training');
-                                    _a.label = 7;
-                                case 7: return [2 /*return*/];
+                                    return [2 /*return*/];
                             }
                         });
                     });
@@ -242,6 +241,7 @@ var AppComponent = /** @class */ (function () {
                     axis = 1;
                     predictions = Array.from(output.argMax(axis).dataSync());
                     console.log(that.classes_txt[predictions[0]] + "vs" + that.classes_txt[labels[j]]);
+                    that.outputText.nativeElement.textContent = "Prediction: " + that.classes_txt[predictions[0]] + "\n Actual: " + that.classes_txt[labels[j]];
                     return [2 /*return*/];
                 });
             });
@@ -260,6 +260,10 @@ var AppComponent = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_5" /* ViewChild */])('inputCanvas'),
         __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */])
     ], AppComponent.prototype, "inputCanvas", void 0);
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_5" /* ViewChild */])('outputText'),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */])
+    ], AppComponent.prototype, "outputText", void 0);
     AppComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'app-root',
