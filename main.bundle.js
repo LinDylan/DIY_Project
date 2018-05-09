@@ -214,7 +214,7 @@ var AppComponent = /** @class */ (function () {
                                         temp.data[k + 3] = canvasData.data[loc + k + 3]; //alpha
                                     }
                                     that.inputCanvas.nativeElement.getContext('2d').putImageData(temp, 0, 0);
-                                    return [4 /*yield*/, that.delay(1500)];
+                                    return [4 /*yield*/, that.delay(100)];
                                 case 3:
                                     _a.sent();
                                     return [4 /*yield*/, that.model.fit(t, labelTensor, { batchSize: batchSize, epochs: 1 })];
