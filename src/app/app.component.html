@@ -1,0 +1,51 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span>Image Classification</span>
+  </mat-toolbar-row>
+</mat-toolbar>
+<div id="content" style="margin: auto; padding: 25px;">
+  <div id="networkList">
+    <mat-toolbar color="primary">
+      <mat-toolbar-row>
+        <span>Network</span>
+        <button mat-icon-button on-click="addConvLayer()">
+          <mat-icon aria-label="Add a Layer">add</mat-icon>
+        </button>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <mat-selection-list>
+      <mat-list-option *ngFor="let layer of layers">
+        {{layer.constructor.name}}
+      </mat-list-option>
+    </mat-selection-list>
+  </div>
+  <div id="inputView">
+    <mat-toolbar color="primary"><mat-toolbar-row><span>input</span></mat-toolbar-row></mat-toolbar>
+    <canvas #inputCanvas width="32" height="32"></canvas>
+  </div>
+  <div id="outputView">
+      <mat-toolbar color="primary"><mat-toolbar-row><span>Output</span></mat-toolbar-row></mat-toolbar>
+      <div #outputText style="margin: auto; padding: 25px;"> 
+        None
+      </div>
+  </div>
+  <div id="controlPad">
+    <mat-toolbar color="primary"><mat-toolbar-row><span>Controls</span></mat-toolbar-row></mat-toolbar>
+    <div id="controlPad_content">
+      <button mat-raised-button color="primary" on-click="train()">Train</button>
+      <button mat-raised-button color="primary" on-click="test()">Test</button>
+      <mat-slider
+      [max]="maxBatches"
+      [min]="minBatches"
+      [thumbLabel]="true"
+      [step] = "1"
+      value={{batches}}
+      ></mat-slider>
+      <form style="float: left;">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Epochs" value={{epochString}}>
+        </mat-form-field>
+      </form>
+    </div>
+  </div>
+</div>

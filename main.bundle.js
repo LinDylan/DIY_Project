@@ -27,7 +27,7 @@ module.exports = "canvas {\r\n    width: 50%;\r\n    height: 50%;\r\n    top: 30
 /***/ "./src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<mat-toolbar color=\"primary\">\n  <mat-toolbar-row>\n    <span>Image Classification</span>\n  </mat-toolbar-row>\n</mat-toolbar>\n<div id=\"content\" style=\"margin: auto; padding: 25px;\">\n  <div id=\"networkList\">\n    <mat-toolbar color=\"primary\">\n      <mat-toolbar-row>\n        <span>Network</span>\n        <button mat-icon-button on-click=\"addConvLayer()\">\n          <mat-icon aria-label=\"Add a Layer\">add</mat-icon>\n        </button>\n      </mat-toolbar-row>\n    </mat-toolbar>\n    <mat-selection-list>\n      <mat-list-option *ngFor=\"let layer of layers\">\n        {{layer.constructor.name}}\n      </mat-list-option>\n    </mat-selection-list>\n  </div>\n  <div id=\"inputView\">\n    <mat-toolbar color=\"primary\"><mat-toolbar-row><span>input</span></mat-toolbar-row></mat-toolbar>\n    <canvas #inputCanvas width=\"32\" height=\"32\"></canvas>\n  </div>\n  <div id=\"outputView\">\n      <mat-toolbar color=\"primary\"><mat-toolbar-row><span>Output</span></mat-toolbar-row></mat-toolbar>\n      <div #outputText style=\"margin: auto; padding: 25px;\"> \n        None\n      </div>\n  </div>\n  <div id=\"controlPad\">\n    <mat-toolbar color=\"primary\"><mat-toolbar-row><span>Controls</span></mat-toolbar-row></mat-toolbar>\n    <div id=\"controlPad_content\">\n      <button mat-raised-button color=\"primary\" on-click=\"train()\">Train</button>\n      <button mat-raised-button color=\"primary\" on-click=\"test()\">Test</button>\n    </div>\n  </div>\n</div>"
+module.exports = "<mat-toolbar color=\"primary\">\n  <mat-toolbar-row>\n    <span>Image Classification</span>\n  </mat-toolbar-row>\n</mat-toolbar>\n<div id=\"content\" style=\"margin: auto; padding: 25px;\">\n  <div id=\"networkList\">\n    <mat-toolbar color=\"primary\">\n      <mat-toolbar-row>\n        <span>Network</span>\n        <button mat-icon-button on-click=\"addConvLayer()\">\n          <mat-icon aria-label=\"Add a Layer\">add</mat-icon>\n        </button>\n      </mat-toolbar-row>\n    </mat-toolbar>\n    <mat-selection-list>\n      <mat-list-option *ngFor=\"let layer of layers\">\n        {{layer.constructor.name}}\n      </mat-list-option>\n    </mat-selection-list>\n  </div>\n  <div id=\"inputView\">\n    <mat-toolbar color=\"primary\"><mat-toolbar-row><span>input</span></mat-toolbar-row></mat-toolbar>\n    <canvas #inputCanvas width=\"32\" height=\"32\"></canvas>\n  </div>\n  <div id=\"outputView\">\n      <mat-toolbar color=\"primary\"><mat-toolbar-row><span>Output</span></mat-toolbar-row></mat-toolbar>\n      <div #outputText style=\"margin: auto; padding: 25px;\"> \n        None\n      </div>\n  </div>\n  <div id=\"controlPad\">\n    <mat-toolbar color=\"primary\"><mat-toolbar-row><span>Controls</span></mat-toolbar-row></mat-toolbar>\n    <div id=\"controlPad_content\">\n      <button mat-raised-button color=\"primary\" on-click=\"train()\">Train</button>\n      <button mat-raised-button color=\"primary\" on-click=\"test()\">Test</button>\n      <mat-slider\n      [max]=\"maxBatches\"\n      [min]=\"minBatches\"\n      [thumbLabel]=\"true\"\n      [step] = \"1\"\n      value={{batches}}\n      ></mat-slider>\n      <form style=\"float: left;\">\n        <mat-form-field class=\"example-full-width\">\n          <input matInput placeholder=\"Epochs\" value={{epochString}}>\n        </mat-form-field>\n      </form>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -93,6 +93,9 @@ var AppComponent = /** @class */ (function () {
         this.learn_rate = 0.15;
         this.optimizer = __WEBPACK_IMPORTED_MODULE_1__tensorflow_tfjs__["train"].sgd(this.learn_rate);
         this.batches = 1;
+        this.maxBatches = 50;
+        this.minBatches = 1;
+        this.epochString = "1";
     }
     AppComponent.prototype.ngOnInit = function () {
         this.data_canvas = document.createElement("canvas");
@@ -155,7 +158,8 @@ var AppComponent = /** @class */ (function () {
                                     if (!(loaded === batches)) return [3 /*break*/, 8];
                                     console.log("done loading");
                                     clearInterval(wait);
-                                    maxEpochs = 1000;
+                                    maxEpochs = parseInt(that.epochString);
+                                    console.log(maxEpochs);
                                     i = 0;
                                     _a.label = 1;
                                 case 1:
@@ -314,6 +318,8 @@ var AppComponent = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__angular_material_progress_spinner__ = __webpack_require__("./node_modules/@angular/material/esm5/progress-spinner.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__angular_material_list__ = __webpack_require__("./node_modules/@angular/material/esm5/list.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__angular_material_icon__ = __webpack_require__("./node_modules/@angular/material/esm5/icon.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__angular_material_slider__ = __webpack_require__("./node_modules/@angular/material/esm5/slider.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__angular_material_input__ = __webpack_require__("./node_modules/@angular/material/esm5/input.es5.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -325,6 +331,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 //Material Components
+
+
 
 
 
@@ -356,6 +364,8 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_10__angular_material_snack_bar__["a" /* MatSnackBarModule */],
                 __WEBPACK_IMPORTED_MODULE_11__angular_material_progress_spinner__["a" /* MatProgressSpinnerModule */],
                 __WEBPACK_IMPORTED_MODULE_13__angular_material_icon__["a" /* MatIconModule */],
+                __WEBPACK_IMPORTED_MODULE_14__angular_material_slider__["a" /* MatSliderModule */],
+                __WEBPACK_IMPORTED_MODULE_15__angular_material_input__["a" /* MatInputModule */]
             ],
             entryComponents: [],
             providers: [],

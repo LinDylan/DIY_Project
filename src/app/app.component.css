@@ -1,0 +1,52 @@
+canvas {
+    width: 50%;
+    height: 50%;
+    top: 30%;
+    left: 25%;
+    position: absolute;
+}
+#networkList {
+    position: absolute;
+    z-index: 2;
+    max-width: 25%;
+    background-color: #F5F5F5;
+}
+#inputView {
+    position: absolute;
+    z-index: 2;
+    top: 100px;
+    left: 20%;
+    min-width: 448px;
+    min-height: 448px; 
+    max-width: 448px;
+    max-height: 448px;
+    background-color: #F5F5F5;
+}
+#outputView {
+    position: absolute;
+    z-index: 2;
+    top: 100px;
+    left: 60%;
+    min-width: 300px;
+    min-height: 150px; 
+    max-width: 300px;
+    max-height: 150px;
+    background-color: #F5F5F5;
+    font-size: 24px;
+    font-family: 'Roboto', 'Noto', sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+#controlPad {
+    position: absolute;
+    top: 75%;
+    z-index: 2;
+    min-width: 95%;
+    max-width: 95%;
+    min-height: 20%;
+    max-height: 20%;
+    background-color: #F5F5F5;
+}
+#controlPad_content {
+    margin: auto;
+    padding: 15px;
+}
