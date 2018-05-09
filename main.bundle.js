@@ -92,6 +92,7 @@ var AppComponent = /** @class */ (function () {
         this.classes_txt = ['airplane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck'];
         this.learn_rate = 0.15;
         this.optimizer = __WEBPACK_IMPORTED_MODULE_1__tensorflow_tfjs__["train"].sgd(this.learn_rate);
+        this.batches = 1;
     }
     AppComponent.prototype.ngOnInit = function () {
         this.data_canvas = document.createElement("canvas");
@@ -125,9 +126,9 @@ var AppComponent = /** @class */ (function () {
     };
     AppComponent.prototype.train = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var that, batches, trainingBatches, batchSize, testFrequency, images, testImage, loaded, i, i, wait;
+            var that, batches, batchSize, testFrequency, images, testImage, loaded, i, i, wait;
             return __generator(this, function (_a) {
-                that = this, batches = 50, trainingBatches = 1, batchSize = 1000, testFrequency = 1;
+                that = this, batches = this.batches, batchSize = 1000, testFrequency = 1;
                 images = new Array();
                 testImage = new Image(1024, 1000);
                 loaded = 0;
@@ -151,14 +152,14 @@ var AppComponent = /** @class */ (function () {
                         return __generator(this, function (_a) {
                             switch (_a.label) {
                                 case 0:
-                                    if (!(loaded === batches)) return [3 /*break*/, 7];
+                                    if (!(loaded === batches)) return [3 /*break*/, 8];
                                     console.log("done loading");
                                     clearInterval(wait);
                                     maxEpochs = 1000;
                                     i = 0;
                                     _a.label = 1;
                                 case 1:
-                                    if (!(i < trainingBatches)) return [3 /*break*/, 6];
+                                    if (!(i < batches)) return [3 /*break*/, 7];
                                     batchData = new Array();
                                     batchLabels = new Array(), offset = (i * 1000);
                                     for (j = offset; j < (offset + 1000); j++) {
@@ -193,7 +194,7 @@ var AppComponent = /** @class */ (function () {
                                     e = 0;
                                     _a.label = 2;
                                 case 2:
-                                    if (!(e < maxEpochs)) return [3 /*break*/, 5];
+                                    if (!(e < maxEpochs)) return [3 /*break*/, 6];
                                     temp = that.inputCanvas.nativeElement.getContext('2d').createImageData(32, 32);
                                     loc = ((e) * 4096);
                                     for (k = 0; k < imageData.data.length; k += 4) {
@@ -203,23 +204,25 @@ var AppComponent = /** @class */ (function () {
                                         temp.data[k + 3] = canvasData.data[loc + k + 3]; //alpha
                                     }
                                     that.inputCanvas.nativeElement.getContext('2d').putImageData(temp, 0, 0);
-                                    console.log(temp);
-                                    return [4 /*yield*/, that.model.fit(t, labelTensor, { batchSize: batchSize, epochs: 1 })];
+                                    return [4 /*yield*/, this.delay(1500)];
                                 case 3:
+                                    _a.sent();
+                                    return [4 /*yield*/, that.model.fit(t, labelTensor, { batchSize: batchSize, epochs: 1 })];
+                                case 4:
                                     history_1 = _a.sent();
                                     loss = history_1.history.loss[0];
                                     accuracy = history_1.history.acc[0];
-                                    _a.label = 4;
-                                case 4:
+                                    _a.label = 5;
+                                case 5:
                                     e++;
                                     return [3 /*break*/, 2];
-                                case 5:
+                                case 6:
                                     i++;
                                     return [3 /*break*/, 1];
-                                case 6:
+                                case 7:
                                     alert('done training');
-                                    _a.label = 7;
-                                case 7: return [2 /*return*/];
+                                    _a.label = 8;
+                                case 8: return [2 /*return*/];
                             }
                         });
                     });
@@ -230,7 +233,7 @@ var AppComponent = /** @class */ (function () {
     };
     AppComponent.prototype.test = function () {
         var img = new Image(1024, 1000);
-        img.src = "./DIY_Project/assets/cifar10_batch_" + 0 + ".png";
+        img.src = "./DIY_Project/assets/cifar10_batch_" + Math.floor(Math.random() * Math.floor(this.batches - 1)) + ".png";
         var that = this, ref, test_data;
         img.onload = function () {
             return __awaiter(this, void 0, void 0, function () {
@@ -266,6 +269,9 @@ var AppComponent = /** @class */ (function () {
             // Divide R, G, B  values by 127 and minus 1
             return fixedImg.toFloat().div(__WEBPACK_IMPORTED_MODULE_1__tensorflow_tfjs__["scalar"](127)).sub(__WEBPACK_IMPORTED_MODULE_1__tensorflow_tfjs__["scalar"](1));
         });
+    };
+    AppComponent.prototype.delay = function (ms) {
+        return new Promise(function (resolve) { return setTimeout(resolve, ms); });
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_5" /* ViewChild */])('inputCanvas'),
