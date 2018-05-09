@@ -10,6 +10,7 @@ import { image } from '@tensorflow/tfjs';
 export class AppComponent implements OnInit {
   @ViewChild('inputCanvas') inputCanvas : ElementRef;
   @ViewChild('outputText') outputText: ElementRef;
+  @ViewChild('epochInput') epochInput : ElementRef;
   title = 'app';
   model: tf.Sequential;
   layers = [];
@@ -55,7 +56,12 @@ export class AppComponent implements OnInit {
     var images = new Array();
     var testImage = new Image(1024, 1000);
     var loaded = 0;
+    that.epochString = that.epochInput.nativeElement.value;
+    var maxEpochs = parseInt(that.epochString);
+
     // Initialize Images
+    console.log(maxEpochs);
+        console.log(batches);
     for (var i = 0; i < batches; i++) { // batches 50 is the max 51 is test data
       images.push(new Image(1024, 1000));
       images[i].onload = function() {
@@ -76,8 +82,8 @@ export class AppComponent implements OnInit {
         clearInterval(wait);
         /** Create Training Data */
         /** action after all batches are done loading */
-        var maxEpochs = parseInt(that.epochString);
         console.log(maxEpochs);
+        console.log(batches);
           for (var i = 0; i < batches; i++) {
             var batchData = new Array();
             var batchLabels = new Array(), offset = (i * 1000);
@@ -169,5 +175,8 @@ export class AppComponent implements OnInit {
   }
   delay(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+  updateBatches(e) {
+    this.batches = e.value;
   }
 }

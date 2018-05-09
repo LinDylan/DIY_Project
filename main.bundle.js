@@ -27,7 +27,7 @@ module.exports = "canvas {\r\n    width: 50%;\r\n    height: 50%;\r\n    top: 30
 /***/ "./src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<mat-toolbar color=\"primary\">\n  <mat-toolbar-row>\n    <span>Image Classification</span>\n  </mat-toolbar-row>\n</mat-toolbar>\n<div id=\"content\" style=\"margin: auto; padding: 25px;\">\n  <div id=\"networkList\">\n    <mat-toolbar color=\"primary\">\n      <mat-toolbar-row>\n        <span>Network</span>\n        <button mat-icon-button on-click=\"addConvLayer()\">\n          <mat-icon aria-label=\"Add a Layer\">add</mat-icon>\n        </button>\n      </mat-toolbar-row>\n    </mat-toolbar>\n    <mat-selection-list>\n      <mat-list-option *ngFor=\"let layer of layers\">\n        {{layer.constructor.name}}\n      </mat-list-option>\n    </mat-selection-list>\n  </div>\n  <div id=\"inputView\">\n    <mat-toolbar color=\"primary\"><mat-toolbar-row><span>input</span></mat-toolbar-row></mat-toolbar>\n    <canvas #inputCanvas width=\"32\" height=\"32\"></canvas>\n  </div>\n  <div id=\"outputView\">\n      <mat-toolbar color=\"primary\"><mat-toolbar-row><span>Output</span></mat-toolbar-row></mat-toolbar>\n      <div #outputText style=\"margin: auto; padding: 25px;\"> \n        None\n      </div>\n  </div>\n  <div id=\"controlPad\">\n    <mat-toolbar color=\"primary\"><mat-toolbar-row><span>Controls</span></mat-toolbar-row></mat-toolbar>\n    <div id=\"controlPad_content\">\n      <button mat-raised-button color=\"primary\" on-click=\"train()\">Train</button>\n      <button mat-raised-button color=\"primary\" on-click=\"test()\">Test</button>\n      <mat-slider\n      [max]=\"maxBatches\"\n      [min]=\"minBatches\"\n      [thumbLabel]=\"true\"\n      [step] = \"1\"\n      value={{batches}}\n      ></mat-slider>\n      <form style=\"float: left;\">\n        <mat-form-field class=\"example-full-width\">\n          <input matInput placeholder=\"Epochs\" value={{epochString}}>\n        </mat-form-field>\n      </form>\n    </div>\n  </div>\n</div>"
+module.exports = "<mat-toolbar color=\"primary\">\n  <mat-toolbar-row>\n    <span>Image Classification</span>\n  </mat-toolbar-row>\n</mat-toolbar>\n<div id=\"content\" style=\"margin: auto; padding: 25px;\">\n  <div id=\"networkList\">\n    <mat-toolbar color=\"primary\">\n      <mat-toolbar-row>\n        <span>Network</span>\n        <button mat-icon-button on-click=\"addConvLayer()\">\n          <mat-icon aria-label=\"Add a Layer\">add</mat-icon>\n        </button>\n      </mat-toolbar-row>\n    </mat-toolbar>\n    <mat-selection-list>\n      <mat-list-option *ngFor=\"let layer of layers\">\n        {{layer.constructor.name}}\n      </mat-list-option>\n    </mat-selection-list>\n  </div>\n  <div id=\"inputView\">\n    <mat-toolbar color=\"primary\"><mat-toolbar-row><span>input</span></mat-toolbar-row></mat-toolbar>\n    <canvas #inputCanvas width=\"32\" height=\"32\"></canvas>\n  </div>\n  <div id=\"outputView\">\n      <mat-toolbar color=\"primary\"><mat-toolbar-row><span>Output</span></mat-toolbar-row></mat-toolbar>\n      <div #outputText style=\"margin: auto; padding: 25px;\"> \n        None\n      </div>\n  </div>\n  <div id=\"controlPad\">\n    <mat-toolbar color=\"primary\"><mat-toolbar-row><span>Controls</span></mat-toolbar-row></mat-toolbar>\n    <div id=\"controlPad_content\">\n      <button mat-raised-button color=\"primary\" on-click=\"train()\">Train</button>\n      <button mat-raised-button color=\"primary\" on-click=\"test()\">Test</button>\n      <mat-slider\n      [max]=\"maxBatches\"\n      [min]=\"minBatches\"\n      [thumbLabel]=\"true\"\n      [step] = \"1\"\n      value={{batches}}\n      (input)=\"updateBatches($event)\"\n      ></mat-slider>\n      <form style=\"float: left;\">\n        <mat-form-field class=\"example-full-width\">\n          <input #epochInput matInput placeholder=\"Epochs\" value={{epochString}}>\n        </mat-form-field>\n      </form>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -129,13 +129,17 @@ var AppComponent = /** @class */ (function () {
     };
     AppComponent.prototype.train = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var that, batches, batchSize, testFrequency, images, testImage, loaded, i, i, wait;
+            var that, batches, batchSize, testFrequency, images, testImage, loaded, maxEpochs, i, i, wait;
             return __generator(this, function (_a) {
                 that = this, batches = this.batches, batchSize = 1000, testFrequency = 1;
                 images = new Array();
                 testImage = new Image(1024, 1000);
                 loaded = 0;
+                that.epochString = that.epochInput.nativeElement.value;
+                maxEpochs = parseInt(that.epochString);
                 // Initialize Images
+                console.log(maxEpochs);
+                console.log(batches);
                 for (i = 0; i < batches; i++) {
                     images.push(new Image(1024, 1000));
                     images[i].onload = function () {
@@ -151,15 +155,17 @@ var AppComponent = /** @class */ (function () {
                 that.data_canvas.getContext('2d').clearRect(0, 0, 1024, 1000);
                 wait = setInterval(function () {
                     return __awaiter(this, void 0, void 0, function () {
-                        var maxEpochs, i, batchData, batchLabels, offset, j, k, labelTensor, canvasData, imageData, j, loc, k, currentImage, z, t, e, temp, loc, k, history_1, loss, accuracy;
+                        var i, batchData, batchLabels, offset, j, k, labelTensor, canvasData, imageData, j, loc, k, currentImage, z, t, e, temp, loc, k, history_1, loss, accuracy;
                         return __generator(this, function (_a) {
                             switch (_a.label) {
                                 case 0:
                                     if (!(loaded === batches)) return [3 /*break*/, 8];
                                     console.log("done loading");
                                     clearInterval(wait);
-                                    maxEpochs = parseInt(that.epochString);
+                                    /** Create Training Data */
+                                    /** action after all batches are done loading */
                                     console.log(maxEpochs);
+                                    console.log(batches);
                                     i = 0;
                                     _a.label = 1;
                                 case 1:
@@ -277,6 +283,9 @@ var AppComponent = /** @class */ (function () {
     AppComponent.prototype.delay = function (ms) {
         return new Promise(function (resolve) { return setTimeout(resolve, ms); });
     };
+    AppComponent.prototype.updateBatches = function (e) {
+        this.batches = e.value;
+    };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_5" /* ViewChild */])('inputCanvas'),
         __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */])
@@ -285,6 +294,10 @@ var AppComponent = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_5" /* ViewChild */])('outputText'),
         __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */])
     ], AppComponent.prototype, "outputText", void 0);
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_5" /* ViewChild */])('epochInput'),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */])
+    ], AppComponent.prototype, "epochInput", void 0);
     AppComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'app-root',
